@@ -11,9 +11,12 @@
 <body>
   <div class="page">
     <nav class="navbar">
-      <div class="container d-flex align-items-center justify-content-between">
+      <div class="container d-flex align-items-center justify-content-between gap-3">
         <a class="navbar-brand" href="#">Spotify Playlist Exporter</a>
-        <span class="tag">Enterprise-grade CSV exports</span>
+        <div class="nav-actions">
+          <span class="tag">Enterprise-grade CSV exports</span>
+          <a class="btn btn-outline-light btn-sm" href="#how-it-works">How it works</a>
+        </div>
       </div>
     </nav>
 
@@ -27,6 +30,20 @@
               Built for teams who need reliable playlist data in seconds. Paste a playlist URL, and get structured CSV data
               with track numbers, durations, and timestamps — ready for spreadsheets, BI tools, or automation.
             </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#export">Start export</a>
+              <a class="btn btn-outline-light" href="#security">Security overview</a>
+            </div>
+            <div class="hero-highlights">
+              <div>
+                <h4>Seconds, not minutes</h4>
+                <p>Optimized pagination keeps large playlists fast.</p>
+              </div>
+              <div>
+                <h4>Audit-ready structure</h4>
+                <p>Consistent columns with ISO timestamps.</p>
+              </div>
+            </div>
             <div class="stats">
               <div class="stat-card">
                 <h3>99.9%</h3>
@@ -42,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-6" id="export">
             <div class="export-card">
               <h2 class="h4 mb-3">Start an export</h2>
               <p class="text-muted mb-4">
@@ -91,7 +108,20 @@
         </div>
       </section>
 
-      <section class="glass-panel mb-5">
+      <section class="trust-strip">
+        <div class="container">
+          <span>Trusted by data teams, analysts, and creators</span>
+          <div class="trust-logos">
+            <span>Media</span>
+            <span>Growth</span>
+            <span>Product</span>
+            <span>Research</span>
+            <span>Operations</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass-panel mb-5" id="how-it-works">
         <div class="row g-4">
           <div class="col-lg-5">
             <h2 class="h4 mb-3">How it works</h2>
@@ -140,6 +170,39 @@
               <div class="feature-card">
                 <h4>Modern UI system</h4>
                 <p>Accessible typography, gradients, and clear calls-to-action across devices.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="security-panel mb-5" id="security">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-5">
+            <span class="pill">Security & governance</span>
+            <h2 class="h3">Your data stays private and controlled.</h2>
+            <p class="text-muted">
+              Exports happen in-session with no storage. Credentials stay local, and CSV files are generated on demand for
+              full ownership.
+            </p>
+          </div>
+          <div class="col-lg-7">
+            <div class="security-grid">
+              <div class="security-card">
+                <h4>Local-first workflow</h4>
+                <p>No playlists or credentials are retained after export.</p>
+              </div>
+              <div class="security-card">
+                <h4>Clear audit trail</h4>
+                <p>Consistent column definitions and export metadata.</p>
+              </div>
+              <div class="security-card">
+                <h4>Rapid failover</h4>
+                <p>Resilient API handling for high-volume playlists.</p>
+              </div>
+              <div class="security-card">
+                <h4>Accessible by design</h4>
+                <p>Readable contrast ratios and keyboard-friendly controls.</p>
               </div>
             </div>
           </div>
