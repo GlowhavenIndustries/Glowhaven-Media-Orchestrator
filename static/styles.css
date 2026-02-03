@@ -3,13 +3,13 @@
 :root {
   --font-primary: "Inter", sans-serif;
   --font-display: "Space Grotesk", sans-serif;
-  --color-bg: #0b0e14;
-  --color-surface: rgba(17, 25, 40, 0.78);
-  --color-surface-strong: rgba(20, 28, 45, 0.92);
-  --color-primary: #6ee7ff;
-  --color-primary-strong: #3ed0f6;
-  --color-accent: #a78bfa;
-  --color-success: #7ef3a4;
+  --color-bg: #05070b;
+  --color-surface: rgba(11, 18, 31, 0.82);
+  --color-surface-strong: rgba(12, 20, 36, 0.95);
+  --color-primary: #7ff5ff;
+  --color-primary-strong: #54d6ff;
+  --color-accent: #c4a0ff;
+  --color-success: #88f7c3;
   --color-text: #f8fafc;
   --color-muted: rgba(148, 163, 184, 0.9);
   --color-border: rgba(148, 163, 184, 0.2);
@@ -31,9 +31,9 @@ body {
   margin: 0;
   font-family: var(--font-primary);
   color: var(--color-text);
-  background: radial-gradient(circle at top, rgba(110, 231, 255, 0.15), transparent 55%),
-    radial-gradient(circle at 20% 20%, rgba(167, 139, 250, 0.2), transparent 45%),
-    linear-gradient(140deg, #05070d 0%, #0b0e14 50%, #0f172a 100%);
+  background: radial-gradient(circle at top, rgba(127, 245, 255, 0.18), transparent 55%),
+    radial-gradient(circle at 20% 20%, rgba(196, 160, 255, 0.2), transparent 45%),
+    linear-gradient(145deg, #03040a 0%, #070b14 55%, #0b1224 100%);
 }
 
 .page {
@@ -53,6 +53,26 @@ body {
   color: var(--color-text);
   text-decoration: none;
   font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.glowhaven-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 30% 30%, #e0fcff, #7ff5ff 45%, rgba(94, 212, 255, 0.6) 70%);
+  box-shadow: 0 0 18px rgba(127, 245, 255, 0.55), 0 0 34px rgba(196, 160, 255, 0.35);
+  position: relative;
+}
+
+.glowhaven-logo::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .nav-actions {
@@ -72,7 +92,8 @@ body {
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   border: 1px solid var(--color-border);
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(10, 15, 28, 0.7);
+  box-shadow: 0 0 16px rgba(127, 245, 255, 0.12);
 }
 
 .hero {
@@ -88,6 +109,14 @@ body {
 .hero p {
   font-size: 1.1rem;
   color: var(--color-muted);
+}
+
+.tagline {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(224, 252, 255, 0.72);
+  margin-bottom: 1rem;
 }
 
 .hero-actions {
@@ -144,6 +173,21 @@ body {
   color: var(--color-text);
   border-radius: var(--radius-sm);
   padding: 0.85rem 1rem;
+}
+
+.form-select {
+  background-color: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+}
+
+.form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(127, 245, 255, 0.2);
+  color: var(--color-text);
+  background-color: rgba(15, 23, 42, 0.85);
 }
 
 .form-control:focus {
@@ -261,7 +305,7 @@ body {
   gap: 0.4rem;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
-  background: rgba(110, 231, 255, 0.16);
+  background: rgba(127, 245, 255, 0.18);
   color: var(--color-primary);
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -329,7 +373,7 @@ body {
   width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: rgba(110, 231, 255, 0.18);
+  background: rgba(127, 245, 255, 0.18);
   display: grid;
   place-items: center;
   color: var(--color-primary);

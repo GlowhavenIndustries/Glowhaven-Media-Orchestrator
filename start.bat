@@ -1,5 +1,5 @@
 @echo off
-ECHO INFO: Starting Spotify Playlist Exporter setup...
+ECHO INFO: Starting Glowhaven Media Orchestrator setup...
 
 REM 1. Check for Python
 python --version >nul 2>nul
@@ -39,20 +39,18 @@ IF NOT DEFINED SECRET_KEY_EXISTS (
     ECHO FLASK_SECRET_KEY=%SECRET_KEY%>>.env
 )
 
-REM 6. Validate Spotify credentials
+REM 6. Validate Spotify credentials (optional for local development)
 FOR /F "usebackq tokens=1,2 delims==" %%A IN (.env) DO (
     IF "%%A"=="SPOTIFY_CLIENT_ID" SET "SPOTIFY_CLIENT_ID=%%B"
     IF "%%A"=="SPOTIFY_CLIENT_SECRET" SET "SPOTIFY_CLIENT_SECRET=%%B"
 )
 
 IF "%SPOTIFY_CLIENT_ID%"=="your_spotify_client_id" (
-    ECHO ERROR: Spotify Client ID is not set. Please edit the '.env' file and add your credentials.
-    exit /b 1
+    ECHO WARN: Spotify Client ID is not set. Exports will be unavailable until credentials are added.
 )
 
 IF "%SPOTIFY_CLIENT_SECRET%"=="your_spotify_client_secret" (
-    ECHO ERROR: Spotify Client Secret is not set. Please edit the '.env' file and add your credentials.
-    exit /b 1
+    ECHO WARN: Spotify Client Secret is not set. Exports will be unavailable until credentials are added.
 )
 
 REM 7. Run the application

@@ -3,51 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spotify Playlist Exporter | Analytics-Ready CSVs for Spotify Playlists</title>
+  <title>Glowhaven Media Orchestrator | Multi-Service Media Export & Analytics</title>
   <meta
     name="description"
-    content="Export Spotify playlists into analytics-ready CSV files with track numbers, artists, durations, and timestamps. Fast, secure, and built for teams."
+    content="Glowhaven Media Orchestrator — Structuring global media ecosystems, flawlessly. Orchestrate multi-service playlist exports and analytics-ready data."
   />
   <meta
     name="keywords"
-    content="Spotify playlist exporter, Spotify playlist to CSV, playlist analytics, Spotify data export, Spotify reporting, playlist CSV"
+    content="media orchestration, playlist export, analytics export, Spotify exporter, YouTube playlists, Apple Music analytics"
   />
-  <meta name="author" content="Spotify Playlist Exporter" />
+  <meta name="author" content="Glowhaven Media Orchestrator" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f1115" />
   <link rel="canonical" href="{{ request.url_root }}" />
-  <meta property="og:title" content="Spotify Playlist Exporter" />
+  <meta property="og:title" content="Glowhaven Media Orchestrator" />
   <meta
     property="og:description"
-    content="Export Spotify playlists into analytics-ready CSV files with track numbers, artists, durations, and timestamps."
+    content="Glowhaven Media Orchestrator — Structuring global media ecosystems, flawlessly."
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ request.url_root }}" />
   <meta
     property="og:image"
-    content="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png"
+    content="{{ url_for('static', filename='glowhaven-emblem.svg', _external=True) }}"
   />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Spotify Playlist Exporter" />
+  <meta name="twitter:title" content="Glowhaven Media Orchestrator" />
   <meta
     name="twitter:description"
-    content="Export Spotify playlists into analytics-ready CSV files with track numbers, artists, durations, and timestamps."
+    content="Glowhaven Media Orchestrator — Structuring global media ecosystems, flawlessly."
   />
   <meta
     name="twitter:image"
-    content="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png"
+    content="{{ url_for('static', filename='glowhaven-emblem.svg', _external=True) }}"
   />
-  <link rel="icon" href="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png" />
+  <link rel="icon" href="{{ url_for('static', filename='glowhaven-emblem.svg') }}" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
   <script type="application/ld+json">
     {
       \"@context\": \"https://schema.org\",
       \"@type\": \"SoftwareApplication\",
-      \"name\": \"Spotify Playlist Exporter\",
+      \"name\": \"Glowhaven Media Orchestrator\",
       \"applicationCategory\": \"BusinessApplication\",
       \"operatingSystem\": \"Web\",
-      \"description\": \"Export Spotify playlists into analytics-ready CSV files with track numbers, artists, durations, and timestamps.\",
+      \"description\": \"Glowhaven Media Orchestrator — Structuring global media ecosystems, flawlessly.\",
       \"url\": \"{{ request.url_root }}\",
       \"offers\": {
         \"@type\": \"Offer\",
@@ -61,9 +61,12 @@
   <div class="page">
     <nav class="navbar">
       <div class="container d-flex align-items-center justify-content-between gap-3">
-        <a class="navbar-brand" href="#">Spotify Playlist Exporter</a>
+        <a class="navbar-brand" href="#">
+          <span class="glowhaven-logo" aria-hidden="true"></span>
+          Glowhaven Media Orchestrator
+        </a>
         <div class="nav-actions">
-          <span class="tag">Enterprise-grade CSV exports</span>
+          <span class="tag">Glowhaven-grade orchestration</span>
           <a class="btn btn-outline-light btn-sm" href="#how-it-works">How it works</a>
         </div>
       </div>
@@ -73,11 +76,12 @@
       <section class="hero">
         <div class="row g-4 align-items-center">
           <div class="col-lg-6">
-            <span class="pill">Modernized experience</span>
-            <h1>Export Spotify playlists into clean, analytics-ready CSV files.</h1>
+            <span class="pill">Glowhaven Core-ready</span>
+            <h1>Orchestrate playlists across services with enterprise-grade exports.</h1>
+            <p class="tagline">Glowhaven Media Orchestrator — Structuring global media ecosystems, flawlessly.</p>
             <p>
-              Built for teams who need reliable playlist data in seconds. Paste a playlist URL, and get structured CSV data
-              with track numbers, durations, and timestamps — ready for spreadsheets, BI tools, or automation.
+              Glowhaven Media Orchestrator keeps global media ecosystems aligned with a unified export engine. Aggregate
+              playlists, schedule exports, and deliver analytics-ready data to CSV, JSON, or downstream dashboards.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#export">Start export</a>
@@ -85,38 +89,48 @@
             </div>
             <div class="hero-highlights">
               <div>
-                <h4>Seconds, not minutes</h4>
-                <p>Optimized pagination keeps large playlists fast.</p>
+                <h4>Multi-service ready</h4>
+                <p>Spotify online today. Expand with Glowhaven plugins tomorrow.</p>
               </div>
               <div>
                 <h4>Audit-ready structure</h4>
-                <p>Consistent columns with ISO timestamps.</p>
+                <p>Consistent columns with ISO timestamps for compliance.</p>
               </div>
             </div>
             <div class="stats">
               <div class="stat-card">
-                <h3>99.9%</h3>
-                <span>API compatibility & resilience</span>
+                <h3>Global</h3>
+                <span>Media orchestration coverage</span>
               </div>
               <div class="stat-card">
                 <h3>{{ csv_fields|length }}</h3>
-                <span>Data columns exported</span>
+                <span>Core export columns</span>
               </div>
               <div class="stat-card">
-                <h3>Secure</h3>
+                <h3>Zero-trust</h3>
                 <span>Credentials stay on your machine</span>
               </div>
             </div>
           </div>
           <div class="col-lg-6" id="export">
             <div class="export-card">
-              <h2 class="h4 mb-3">Start an export</h2>
+              <h2 class="h4 mb-3">Start an orchestration export</h2>
               <p class="text-muted mb-4">
-                Enter the Spotify playlist URL. We'll validate it, fetch data, and prepare your CSV.
+                Select a service module and provide a playlist URL. We'll validate, orchestrate, and prepare your export.
               </p>
               <form id="exportForm" method="POST" action="/">
                 <div class="mb-3">
-                  <label class="form-label" for="playlistUrl">Spotify playlist URL</label>
+                  <label class="form-label" for="serviceKey">Media service</label>
+                  <select class="form-select" id="serviceKey" name="service_key" required>
+                    {% for service in services %}
+                      <option value="{{ service.key }}" {% if not service.is_available %}disabled{% endif %}>
+                        {{ service.name }} — {{ service.detail }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="playlistUrl">Playlist URL</label>
                   <input
                     type="url"
                     class="form-control"
@@ -126,7 +140,7 @@
                     required
                   />
                 </div>
-                <button id="submitButton" type="submit" class="btn btn-primary w-100">Export to CSV</button>
+                <button id="submitButton" type="submit" class="btn btn-primary w-100">Run export</button>
               </form>
 
               <div class="mt-4 d-flex align-items-center gap-3">
@@ -159,12 +173,12 @@
 
       <section class="trust-strip">
         <div class="container">
-          <span>Trusted by data teams, analysts, and creators</span>
+          <span>Trusted by data teams, creators, and global media operations</span>
           <div class="trust-logos">
-            <span>Media</span>
-            <span>Growth</span>
-            <span>Product</span>
-            <span>Research</span>
+            <span>Broadcast</span>
+            <span>Streaming</span>
+            <span>Analytics</span>
+            <span>Creative</span>
             <span>Operations</span>
           </div>
         </div>
@@ -175,34 +189,34 @@
           <div class="col-lg-5">
             <h2 class="h4 mb-3">How it works</h2>
             <p class="text-muted">
-              Designed for speed, clarity, and compliance. Export data in three simple steps.
+              Designed for speed, clarity, and compliance. Orchestrate multi-service exports in three simple steps.
             </p>
             <div class="steps">
               <div class="step-card">
                 <div class="step-badge">1</div>
                 <div>
-                  <h4 class="h6">Paste the playlist URL</h4>
-                  <p class="text-muted mb-0">We support standard Spotify playlist links and URIs.</p>
+                  <h4 class="h6">Select a media source</h4>
+                  <p class="text-muted mb-0">Spotify is online today, with YouTube and Apple Music modules queued.</p>
                 </div>
               </div>
               <div class="step-card">
                 <div class="step-badge">2</div>
                 <div>
                   <h4 class="h6">We fetch track metadata</h4>
-                  <p class="text-muted mb-0">All tracks, artists, and durations are gathered automatically.</p>
+                  <p class="text-muted mb-0">Tracks, artists, and durations are gathered automatically.</p>
                 </div>
               </div>
               <div class="step-card">
                 <div class="step-badge">3</div>
                 <div>
-                  <h4 class="h6">Download your CSV</h4>
-                  <p class="text-muted mb-0">Instant download plus an on-screen preview.</p>
+                  <h4 class="h6">Download your export</h4>
+                  <p class="text-muted mb-0">CSV today, JSON and data warehouse outputs next.</p>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-lg-7">
-            <h2 class="h4 mb-3">Why teams choose this exporter</h2>
+            <h2 class="h4 mb-3">Why teams choose Glowhaven</h2>
             <div class="feature-list">
               <div class="feature-card">
                 <h4>Analytics-ready data</h4>
@@ -217,8 +231,8 @@
                 <p>Credentials stay local and are never stored in the app or database.</p>
               </div>
               <div class="feature-card">
-                <h4>Modern UI system</h4>
-                <p>Accessible typography, gradients, and clear calls-to-action across devices.</p>
+                <h4>Glowhaven-ready modules</h4>
+                <p>Plugin architecture keeps Spotify, YouTube, and Apple Music isolated and scalable.</p>
               </div>
             </div>
           </div>
@@ -246,12 +260,12 @@
                 <p>Consistent column definitions and export metadata.</p>
               </div>
               <div class="security-card">
-                <h4>Rapid failover</h4>
-                <p>Resilient API handling for high-volume playlists.</p>
+                <h4>Enterprise secrets path</h4>
+                <p>Optional Glowhaven Core secrets integration for production teams.</p>
               </div>
               <div class="security-card">
-                <h4>Accessible by design</h4>
-                <p>Readable contrast ratios and keyboard-friendly controls.</p>
+                <h4>TLS-ready deployment</h4>
+                <p>Designed for reverse proxies, audit logs, and secure transport.</p>
               </div>
             </div>
           </div>
@@ -261,7 +275,7 @@
 
     <footer class="footer">
       <div class="container d-flex flex-column flex-md-row justify-content-between gap-3">
-        <span>Built with Flask, Spotipy, and modern UX principles.</span>
+        <span>Glowhaven Media Orchestrator — Structuring global media ecosystems, flawlessly.</span>
         <span>Need help? Review the README for setup and usage.</span>
       </div>
     </footer>
