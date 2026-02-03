@@ -1,0 +1,295 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+:root {
+  --font-primary: "Inter", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --color-bg: #0b0e14;
+  --color-surface: rgba(17, 25, 40, 0.78);
+  --color-surface-strong: rgba(20, 28, 45, 0.92);
+  --color-primary: #6ee7ff;
+  --color-primary-strong: #3ed0f6;
+  --color-accent: #a78bfa;
+  --color-success: #7ef3a4;
+  --color-text: #f8fafc;
+  --color-muted: rgba(148, 163, 184, 0.9);
+  --color-border: rgba(148, 163, 184, 0.2);
+  --shadow-lg: 0 24px 80px rgba(15, 23, 42, 0.55);
+  --shadow-md: 0 14px 40px rgba(15, 23, 42, 0.45);
+  --shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.35);
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-primary);
+  color: var(--color-text);
+  background: radial-gradient(circle at top, rgba(110, 231, 255, 0.15), transparent 55%),
+    radial-gradient(circle at 20% 20%, rgba(167, 139, 250, 0.2), transparent 45%),
+    linear-gradient(140deg, #05070d 0%, #0b0e14 50%, #0f172a 100%);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navbar {
+  padding: 1.5rem 0;
+}
+
+.navbar-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.tag {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.hero {
+  padding: 2rem 0 4rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 3.4vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+.glass-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(30px);
+  padding: 2.5rem;
+}
+
+.export-card {
+  background: var(--color-surface-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 2rem;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.form-control {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(110, 231, 255, 0.2);
+  color: var(--color-text);
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  border: none;
+  color: #0b0e14;
+  font-weight: 600;
+  padding: 0.9rem 1.4rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-primary-strong), var(--color-accent));
+  transform: translateY(-1px);
+}
+
+.btn-outline-light {
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(226, 232, 240, 0.2);
+  color: var(--color-text);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 1rem 1.25rem;
+}
+
+.stat-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.stat-card span {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.feature-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.feature-card {
+  padding: 1.3rem;
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.feature-card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.feature-card p {
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(110, 231, 255, 0.16);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.loader {
+  border: 4px solid rgba(148, 163, 184, 0.2);
+  border-top: 4px solid var(--color-primary);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.export-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.export-preview {
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 1rem;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+.flash-message {
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  background: rgba(248, 113, 113, 0.1);
+  padding: 0.9rem 1rem;
+  color: #fecaca;
+}
+
+.steps {
+  display: grid;
+  gap: 1rem;
+}
+
+.step-card {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.step-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(110, 231, 255, 0.18);
+  display: grid;
+  place-items: center;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 2.5rem 0 1.5rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: inherit;
+}
+
+@media (max-width: 991px) {
+  .hero {
+    padding: 1.5rem 0 2.5rem;
+  }
+
+  .glass-panel {
+    padding: 2rem;
+  }
+
+  .export-card {
+    padding: 1.5rem;
+  }
+}
