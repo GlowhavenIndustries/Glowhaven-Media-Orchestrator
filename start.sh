@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# A robust script to set up and run the Spotify Playlist Exporter.
+# A robust script to set up and run Glowhaven Media Orchestrator.
 
 # --- Helper Functions ---
 print_info() {
@@ -11,8 +11,12 @@ print_error() {
     echo "ERROR: $1" >&2
 }
 
+print_warning() {
+    echo "WARN: $1"
+}
+
 # --- Main Script ---
-print_info "Starting Spotify Playlist Exporter setup..."
+print_info "Starting Glowhaven Media Orchestrator setup..."
 
 # 1. Check for Python 3
 if ! command -v python3 &> /dev/null; then
@@ -56,20 +60,18 @@ if ! grep -q "^FLASK_SECRET_KEY=" "$ENV_FILE" || [[ -z $(grep "^FLASK_SECRET_KEY
     mv "$ENV_FILE.tmp" "$ENV_FILE"
 fi
 
-# 6. Validate Spotify credentials
+# 6. Validate Spotify credentials (optional for local development)
 # Load .env file to check variables. This is a safe way to load them.
 if [ -f "$ENV_FILE" ]; then
   export $(grep -v '^#' "$ENV_FILE" | xargs)
 fi
 
 if [ -z "$SPOTIFY_CLIENT_ID" ] || [ "$SPOTIFY_CLIENT_ID" == "your_spotify_client_id" ]; then
-    print_error "Spotify Client ID is not set. Please edit the '.env' file and add your credentials."
-    exit 1
+    print_warning "Spotify Client ID is not set. Exports will be unavailable until credentials are added."
 fi
 
 if [ -z "$SPOTIFY_CLIENT_SECRET" ] || [ "$SPOTIFY_CLIENT_SECRET" == "your_spotify_client_secret" ]; then
-    print_error "Spotify Client Secret is not set. Please edit the '.env' file and add your credentials."
-    exit 1
+    print_warning "Spotify Client Secret is not set. Exports will be unavailable until credentials are added."
 fi
 
 # 7. Run the application

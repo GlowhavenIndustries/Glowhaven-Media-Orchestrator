@@ -1,5 +1,7 @@
 import pytest
+
 from app import create_app
+from orchestrator.exports import TrackRow
 
 @pytest.fixture
 def app(monkeypatch):
@@ -25,26 +27,46 @@ def test_index_get(client):
     """Test that the index page loads correctly."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b"Spotify Playlist Exporter" in response.data
+    assert b"Glowhaven Media Orchestrator" in response.data
 
 def test_post_valid_playlist(client, mocker):
     """Test exporting a valid playlist URL."""
-    # Mock the spotipy client
-    mock_sp = mocker.patch('app.sp')
-
-    # Mock the playlist data
-    mock_sp.playlist.return_value = {
-        'name': 'Test Playlist',
-        'tracks': {
-            'items': [
-                {'track': {'name': 'Song 1', 'artists': [{'name': 'Artist A'}], 'album': {'name': 'Album X'}, 'duration_ms': 180000}},
-                {'track': {'name': 'Song 2', 'artists': [{'name': 'Artist B'}], 'album': {'name': 'Album Y'}, 'duration_ms': 240000}},
+    plugin = client.application.config["PLUGIN_REGISTRY"].get("spotify")
+    mocker.patch.object(
+        plugin,
+        "export_playlist",
+        return_value=(
+            "Test Playlist",
+            [
+                TrackRow(
+                    track_number=1,
+                    name="Song 1",
+                    artists="Artist A",
+                    album="Album X",
+                    duration_ms=180000,
+                    duration="3:00",
+                    added_at="",
+                ),
+                TrackRow(
+                    track_number=2,
+                    name="Song 2",
+                    artists="Artist B",
+                    album="Album Y",
+                    duration_ms=240000,
+                    duration="4:00",
+                    added_at="",
+                ),
             ],
-            'next': None
-        }
-    }
+        ),
+    )
 
-    response = client.post('/', data={'playlist_url': 'https://open.spotify.com/playlist/validid123'})
+    response = client.post(
+        '/',
+        data={
+            'playlist_url': 'https://open.spotify.com/playlist/validid123',
+            'service_key': 'spotify',
+        },
+    )
 
     assert response.status_code == 200
     assert response.mimetype == 'text/csv'
@@ -57,16 +79,24 @@ def test_post_valid_playlist(client, mocker):
 
 def test_post_invalid_playlist_url(client):
     """Test submitting an invalid Spotify URL."""
-    response = client.post('/', data={'playlist_url': 'https://not-spotify.com/playlist/invalid'}, follow_redirects=True)
+    response = client.post(
+        '/',
+        data={'playlist_url': 'https://not-spotify.com/playlist/invalid', 'service_key': 'spotify'},
+        follow_redirects=True,
+    )
     assert response.status_code == 200
-    assert b'Invalid Spotify playlist URL.' in response.data
+    assert b'Invalid playlist URL.' in response.data
 
 def test_post_spotify_api_error(client, mocker):
     """Test handling of Spotify API errors."""
-    mock_sp = mocker.patch('app.sp')
+    plugin = client.application.config["PLUGIN_REGISTRY"].get("spotify")
     from spotipy.exceptions import SpotifyException
-    mock_sp.playlist.side_effect = SpotifyException(404, -1, "Not found")
+    mocker.patch.object(plugin, "export_playlist", side_effect=SpotifyException(404, -1, "Not found"))
 
-    response = client.post('/', data={'playlist_url': 'https://open.spotify.com/playlist/notfoundid'}, follow_redirects=True)
+    response = client.post(
+        '/',
+        data={'playlist_url': 'https://open.spotify.com/playlist/notfoundid', 'service_key': 'spotify'},
+        follow_redirects=True,
+    )
     assert response.status_code == 200
     assert b'An error occurred with the Spotify API.' in response.data

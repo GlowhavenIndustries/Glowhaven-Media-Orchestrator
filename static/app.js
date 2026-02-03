@@ -9,11 +9,11 @@ const setLoadingState = (isLoading) => {
   if (isLoading) {
     loader.classList.remove("d-none");
     submitButton.disabled = true;
-    submitButton.textContent = "Exporting...";
+    submitButton.textContent = "Orchestrating...";
   } else {
     loader.classList.add("d-none");
     submitButton.disabled = false;
-    submitButton.textContent = "Export to CSV";
+    submitButton.textContent = "Run export";
   }
 };
 
