@@ -2,8 +2,11 @@ import pytest
 from app import create_app
 
 @pytest.fixture
-def app():
+def app(monkeypatch):
     """Create and configure a new app instance for each test."""
+    monkeypatch.setenv("SPOTIFY_CLIENT_ID", "test_client_id")
+    monkeypatch.setenv("SPOTIFY_CLIENT_SECRET", "test_client_secret")
+    monkeypatch.setenv("FLASK_SECRET_KEY", "test_secret_key")
     # Setup a test config
     app = create_app()
     app.config.update({
@@ -41,15 +44,16 @@ def test_post_valid_playlist(client, mocker):
         }
     }
 
-    response = client.post('/', data={'playlist_url': 'https://open.spotify.com/playlist/valid_id'})
+    response = client.post('/', data={'playlist_url': 'https://open.spotify.com/playlist/validid123'})
 
     assert response.status_code == 200
     assert response.mimetype == 'text/csv'
     assert response.headers['Content-Disposition'] == 'attachment; filename=Test_Playlist.csv'
 
     csv_data = response.data.decode('utf-8')
-    assert "Song 1,Artist A,Album X,180000" in csv_data
-    assert "Song 2,Artist B,Album Y,240000" in csv_data
+    assert "Track #,Name,Artists,Album,Duration (ms),Duration,Added At" in csv_data
+    assert "1,Song 1,Artist A,Album X,180000,3:00," in csv_data
+    assert "2,Song 2,Artist B,Album Y,240000,4:00," in csv_data
 
 def test_post_invalid_playlist_url(client):
     """Test submitting an invalid Spotify URL."""
@@ -63,6 +67,6 @@ def test_post_spotify_api_error(client, mocker):
     from spotipy.exceptions import SpotifyException
     mock_sp.playlist.side_effect = SpotifyException(404, -1, "Not found")
 
-    response = client.post('/', data={'playlist_url': 'https://open.spotify.com/playlist/not_found_id'}, follow_redirects=True)
+    response = client.post('/', data={'playlist_url': 'https://open.spotify.com/playlist/notfoundid'}, follow_redirects=True)
     assert response.status_code == 200
     assert b'An error occurred with the Spotify API.' in response.data
