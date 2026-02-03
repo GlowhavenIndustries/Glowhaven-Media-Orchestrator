@@ -1,8 +1,6 @@
-# Spotify Playlist Exporter
+# Glowhaven Media Orchestrator
 
 Export Spotify playlists into analytics-ready CSV files with a polished, enterprise-quality interface. The application is built with Flask and Spotipy, designed to be reliable, fast, and easy to operate for both casual users and data teams.
-
-**Primary keywords:** Spotify playlist exporter, Spotify CSV export, playlist analytics, playlist data extraction, Spotify playlist to CSV, Spotify playlist reporting.
 
 ## Why teams love it
 
