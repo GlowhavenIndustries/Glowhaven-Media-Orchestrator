@@ -18,10 +18,21 @@ const setLoadingState = (isLoading) => {
 };
 
 const updateExportMeta = (filename, lineCount) => {
-  exportMeta.innerHTML = `
-    <span>Filename: <strong>${filename}</strong></span>
-    <span>Rows exported: <strong>${lineCount}</strong></span>
-  `;
+  exportMeta.textContent = "";
+  const filenameSpan = document.createElement("span");
+  const filenameStrong = document.createElement("strong");
+  filenameStrong.textContent = filename;
+  filenameSpan.textContent = "Filename: ";
+  filenameSpan.appendChild(filenameStrong);
+
+  const rowsSpan = document.createElement("span");
+  const rowsStrong = document.createElement("strong");
+  rowsStrong.textContent = `${lineCount}`;
+  rowsSpan.textContent = "Rows exported: ";
+  rowsSpan.appendChild(rowsStrong);
+
+  exportMeta.appendChild(filenameSpan);
+  exportMeta.appendChild(rowsSpan);
 };
 
 exportForm.addEventListener("submit", (event) => {
