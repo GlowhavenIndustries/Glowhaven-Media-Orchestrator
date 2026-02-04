@@ -24,6 +24,14 @@ from a single workstation to global media operations.
 
 ## Quick start
 
+### Windows 11 (no Docker, simplest)
+
+1. Install Python 3.10+ from https://www.python.org/downloads/windows/ (check “Add python.exe to PATH”).
+2. Double-click `start.bat` in this repo.
+
+The script creates a virtual environment, installs dependencies, generates a secret key if needed, and starts the app at
+`http://127.0.0.1:5000`.
+
 ### Docker (dev)
 
 ```bash
@@ -43,6 +51,15 @@ git clone https://github.com/GlowhavenIndustries/Glowhaven-Media-Orchestrator.gi
 ```bash
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+### Windows (manual)
+
+```bat
+python -m venv venv
+venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 ```
