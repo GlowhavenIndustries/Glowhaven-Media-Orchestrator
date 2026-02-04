@@ -35,7 +35,7 @@ docker-compose up -d
 Run this in PowerShell or Command Prompt after installing Docker Desktop (it also installs the app by cloning the repo):
 
 ```powershell
-git clone https://github.com/your-org/spotify-playlist-exporter.git; cd spotify-playlist-exporter; docker compose up -d --build
+git clone https://github.com/GlowhavenIndustries/Glowhaven-Media-Orchestrator.git; cd spotify-playlist-exporter; docker compose up -d --build
 ```
 
 ### Python (dev)
