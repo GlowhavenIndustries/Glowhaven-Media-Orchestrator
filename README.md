@@ -30,6 +30,14 @@ from a single workstation to global media operations.
 docker-compose up -d
 ```
 
+### Docker (Windows, one command)
+
+Run this in PowerShell or Command Prompt after installing Docker Desktop (it also installs the app by cloning the repo):
+
+```powershell
+git clone https://github.com/your-org/spotify-playlist-exporter.git; cd spotify-playlist-exporter; docker compose up -d --build
+```
+
 ### Python (dev)
 
 ```bash
