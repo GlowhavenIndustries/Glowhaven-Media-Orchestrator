@@ -1,4 +1,5 @@
 import logging
+import os
 
 from flask import Flask, flash, redirect, render_template, request, send_file, url_for
 from spotipy.exceptions import SpotifyException
@@ -19,7 +20,7 @@ def build_plugin_registry(config: OrchestratorConfig) -> PluginRegistry:
 
 def create_app():
     """Create and configure the Flask application."""
-    app = Flask(__name__)
+    app = Flask(__name__, instance_path=os.path.abspath(os.path.dirname(__file__)))
 
     try:
         from dotenv import load_dotenv
