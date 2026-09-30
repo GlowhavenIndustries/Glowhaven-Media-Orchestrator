@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from app import create_app
@@ -28,6 +30,13 @@ def test_index_get(client):
     response = client.get('/')
     assert response.status_code == 200
     assert b"Glowhaven Media Orchestrator" in response.data
+
+def csrf_token(client):
+    response = client.get('/')
+    match = re.search(rb'name="csrf_token" value="([^"]+)"', response.data)
+    assert match
+    return match.group(1).decode()
+
 
 def test_post_valid_playlist(client, mocker):
     """Test exporting a valid playlist URL."""
@@ -65,6 +74,7 @@ def test_post_valid_playlist(client, mocker):
         data={
             'playlist_url': 'https://open.spotify.com/playlist/validid123',
             'service_key': 'spotify',
+            'csrf_token': csrf_token(client),
         },
     )
 
@@ -81,7 +91,7 @@ def test_post_invalid_playlist_url(client):
     """Test submitting an invalid Spotify URL."""
     response = client.post(
         '/',
-        data={'playlist_url': 'https://not-spotify.com/playlist/invalid', 'service_key': 'spotify'},
+        data={'playlist_url': 'https://not-spotify.com/playlist/invalid', 'service_key': 'spotify', 'csrf_token': csrf_token(client)},
         follow_redirects=True,
     )
     assert response.status_code == 200
@@ -95,8 +105,24 @@ def test_post_spotify_api_error(client, mocker):
 
     response = client.post(
         '/',
-        data={'playlist_url': 'https://open.spotify.com/playlist/notfoundid', 'service_key': 'spotify'},
+        data={'playlist_url': 'https://open.spotify.com/playlist/notfoundid', 'service_key': 'spotify', 'csrf_token': csrf_token(client)},
         follow_redirects=True,
     )
     assert response.status_code == 200
     assert b'An error occurred with the Spotify API.' in response.data
+
+
+def test_post_without_csrf_is_rejected(client):
+    response = client.post(
+        '/',
+        data={'playlist_url': 'https://open.spotify.com/playlist/validid123', 'service_key': 'spotify'},
+    )
+    assert response.status_code == 403
+
+
+def test_security_headers(client):
+    response = client.get('/')
+    assert response.headers['X-Content-Type-Options'] == 'nosniff'
+    assert response.headers['X-Frame-Options'] == 'DENY'
+    assert response.headers['Referrer-Policy'] == 'strict-origin-when-cross-origin'
+    assert "frame-ancestors 'none'" in response.headers['Content-Security-Policy']
