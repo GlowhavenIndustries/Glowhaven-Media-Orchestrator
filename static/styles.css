@@ -346,6 +346,11 @@ body {
   color: #e2e8f0;
 }
 
+.export-preview:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .flash-message {
   border-radius: var(--radius-sm);
   border: 1px solid rgba(248, 113, 113, 0.35);

@@ -21,7 +21,7 @@ def test_extract_playlist_id(url, expected_id):
 @pytest.mark.parametrize("name, expected_filename", [
     ("My Awesome Playlist", "My_Awesome_Playlist.csv"),
     ("  leading/trailing spaces  ", "leadingtrailing_spaces.csv"),
-    ("Playlist with /\\:*?\"<>| chars", "Playlist_with__chars.csv"),
+    ("Playlist with /\\:*?\"<>| chars", "Playlist_with_chars.csv"),
     ("a" * 200, ("a" * 150) + ".csv"),
     ("", "playlist.csv"),
     ("<>:\"/\\|?*", "playlist.csv"), # all invalid chars
