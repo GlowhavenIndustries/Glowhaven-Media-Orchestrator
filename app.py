@@ -68,6 +68,11 @@ def create_app():
 
     config = OrchestratorConfig.from_env()
     app.secret_key = config.flask_secret_key or secrets.token_hex(32)
+    app.config.update(
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE="Lax",
+        SESSION_COOKIE_SECURE=config.is_production,
+    )
     if not config.flask_secret_key and config.is_production:
         raise RuntimeError("Production error: FLASK_SECRET_KEY environment variable is required.")
 
@@ -135,7 +140,7 @@ def create_app():
                 return redirect(url_for("index"))
 
         services = app.config["PLUGIN_REGISTRY"].list_status()
-        return render_template("index.html", csv_fields=CSV_FIELDS, services=services)
+        return render_template("index.html", csv_fields=CSV_FIELDS, services=services, csrf_token=_csrf_token())
 
     return app
 
