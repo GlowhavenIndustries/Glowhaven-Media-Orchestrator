@@ -119,6 +119,7 @@
                 Select a service module and provide a playlist URL. We'll validate, orchestrate, and prepare your export.
               </p>
               <form id="exportForm" method="POST" action="/">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
                 <div class="mb-3">
                   <label class="form-label" for="serviceKey">Media service</label>
                   <select class="form-select" id="serviceKey" name="service_key" required>
@@ -281,7 +282,6 @@
     </footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
