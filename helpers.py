@@ -43,8 +43,8 @@ def extract_playlist_id(value):
 def sanitize_filename(name):
     """Sanitize a playlist name into a safe cross-platform CSV filename."""
     name = str(name or "").strip()
-    name = re.sub(r'[\\x00-\\x1f<>:"/\\\\|?*]', '', name)
-    name = re.sub(r'\\s+', '_', name).strip(' ._')
+    name = re.sub(r'[\x00-\x1f<>:"/\\|?*]', '', name)
+    name = re.sub(r'\s+', '_', name).strip(' ._')
     name = name[:150].rstrip(' ._')
     if not name:
         return "playlist.csv"
