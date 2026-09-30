@@ -25,7 +25,7 @@ def extract_playlist_id(value):
         return spotify_uri_match.group(1)
 
     parsed = urlparse(cleaned_value)
-    if parsed.netloc != "open.spotify.com" and not parsed.netloc.endswith(".spotify.com"):
+    if parsed.scheme != "https" or parsed.hostname != "open.spotify.com":
         return None
 
     path_parts = [part for part in parsed.path.split("/") if part]
@@ -37,24 +37,21 @@ def extract_playlist_id(value):
         return None
 
     playlist_id = path_parts[playlist_index]
-    return playlist_id if SPOTIFY_ID_PATTERN.fullmatch(playlist_id) else None
+    return playlist_id if len(playlist_id) <= 128 and SPOTIFY_ID_PATTERN.fullmatch(playlist_id) else None
 
 
 def sanitize_filename(name):
-    """Sanitizes a string to be a valid filename."""
-    name = name.strip()
-    # Remove invalid characters that are common across OSes
-    name = re.sub(r'[<>:"/\\|?*]', '', name)
-    # Replace spaces with underscores for better compatibility
-    name = name.replace(' ', '_')
-    # Limit length to avoid filesystem errors
-    name = name[:150]
-    # If the name ends up empty after sanitization, provide a default
+    """Sanitize a playlist name into a safe cross-platform CSV filename."""
+    name = str(name or "").strip()
+    name = re.sub(r'[\\x00-\\x1f<>:"/\\\\|?*]', '', name)
+    name = re.sub(r'\\s+', '_', name).strip(' ._')
+    name = name[:150].rstrip(' ._')
     if not name:
         return "playlist.csv"
-    if not name.lower().endswith(".csv"):
-        return f"{name}.csv"
-    return name
+    stem = name[:-4] if name.lower().endswith(".csv") else name
+    if stem.upper() in {"CON", "PRN", "AUX", "NUL", *(f"COM{i}" for i in range(1, 10)), *(f"LPT{i}" for i in range(1, 10))}:
+        stem = "playlist"
+    return f"{stem}.csv"
 
 
 def format_duration(duration_ms):
