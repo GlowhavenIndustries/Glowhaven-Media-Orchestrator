@@ -126,3 +126,13 @@ def test_security_headers(client):
     assert response.headers['X-Frame-Options'] == 'DENY'
     assert response.headers['Referrer-Policy'] == 'strict-origin-when-cross-origin'
     assert "frame-ancestors 'none'" in response.headers['Content-Security-Policy']
+
+
+def test_csv_formula_injection_is_neutralized():
+    from orchestrator.exports import TrackRow, generate_csv
+    row = TrackRow(1, "=SUM(A1:A2)", "+evil", "@cmd", 1000, "0:01", "-danger")
+    csv_data = generate_csv([row]).getvalue().decode("utf-8")
+    assert "'=SUM(A1:A2)" in csv_data
+    assert "'+evil" in csv_data
+    assert "'@cmd" in csv_data
+    assert "'-danger" in csv_data
