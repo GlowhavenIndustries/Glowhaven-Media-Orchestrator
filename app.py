@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 MAX_PLAYLIST_URL_LENGTH = 2048
 RATE_WINDOW_SECONDS = 600
 RATE_LIMIT = 20
+MAX_RATE_KEYS = 10000
 _rate_limits = defaultdict(list)
 
 def _client_key():
@@ -25,6 +26,12 @@ def _client_key():
 def _allow_request():
     now = time.monotonic()
     key = _client_key()
+    if key not in _rate_limits and len(_rate_limits) >= MAX_RATE_KEYS:
+        for candidate in list(_rate_limits):
+            if not _rate_limits[candidate] or now - _rate_limits[candidate][-1] >= RATE_WINDOW_SECONDS:
+                del _rate_limits[candidate]
+        if len(_rate_limits) >= MAX_RATE_KEYS:
+            return False
     recent = [stamp for stamp in _rate_limits[key] if now - stamp < RATE_WINDOW_SECONDS]
     _rate_limits[key] = recent
     if len(recent) >= RATE_LIMIT:
@@ -148,4 +155,4 @@ if __name__ == '__main__':
     app = create_app()
     print("Server started. Go to http://localhost:5000/ in your browser.")
     from waitress import serve
-    serve(app, host="0.0.0.0", port=5000)
+    serve(app, host=os.environ.get("ORCHESTRATOR_BIND_HOST", "127.0.0.1"), port=int(os.environ.get("PORT", "5000")))
