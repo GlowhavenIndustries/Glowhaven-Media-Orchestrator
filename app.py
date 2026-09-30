@@ -1,7 +1,10 @@
 import logging
 import os
+import secrets
+import time
+from collections import defaultdict
 
-from flask import Flask, flash, redirect, render_template, request, send_file, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, send_file, session, url_for
 from spotipy.exceptions import SpotifyException
 
 from helpers import extract_playlist_id, sanitize_filename
@@ -10,6 +13,41 @@ from orchestrator.exports import CSV_FIELDS, generate_csv
 from orchestrator.plugins import PluginRegistry, SpotifyServicePlugin
 
 logger = logging.getLogger(__name__)
+
+MAX_PLAYLIST_URL_LENGTH = 2048
+RATE_WINDOW_SECONDS = 600
+RATE_LIMIT = 20
+_rate_limits = defaultdict(list)
+
+def _client_key():
+    return request.remote_addr or "unknown"
+
+def _allow_request():
+    now = time.monotonic()
+    key = _client_key()
+    recent = [stamp for stamp in _rate_limits[key] if now - stamp < RATE_WINDOW_SECONDS]
+    _rate_limits[key] = recent
+    if len(recent) >= RATE_LIMIT:
+        return False
+    recent.append(now)
+    return True
+
+def _csrf_token():
+    token = session.get("csrf_token")
+    if not token:
+        token = secrets.token_urlsafe(32)
+        session["csrf_token"] = token
+    return token
+
+def _validate_request():
+    if not _allow_request():
+        abort(429)
+    token = request.form.get("csrf_token", "")
+    expected = session.get("csrf_token", "")
+    if not token or not expected or not secrets.compare_digest(token, expected):
+        abort(403)
+    if len(request.form.get("playlist_url", "").strip()) > MAX_PLAYLIST_URL_LENGTH:
+        abort(413)
 
 
 def build_plugin_registry(config: OrchestratorConfig) -> PluginRegistry:
@@ -29,19 +67,34 @@ def create_app():
         pass
 
     config = OrchestratorConfig.from_env()
-    app.secret_key = config.flask_secret_key
-    if not app.secret_key and config.is_production:
+    app.secret_key = config.flask_secret_key or secrets.token_hex(32)
+    if not config.flask_secret_key and config.is_production:
         raise RuntimeError("Production error: FLASK_SECRET_KEY environment variable is required.")
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s [%(name)s] %(message)s")
     registry = build_plugin_registry(config)
     app.config["PLUGIN_REGISTRY"] = registry
+    app.config["MAX_CONTENT_LENGTH"] = 16 * 1024
+    app.config["MAX_FORM_MEMORY_SIZE"] = 16 * 1024
+    app.config["MAX_FORM_PARTS"] = 32
+
+    @app.after_request
+    def apply_security_headers(response):
+        response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        response.headers.setdefault("X-Frame-Options", "DENY")
+        response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+        response.headers.setdefault("Content-Security-Policy", "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'")
+        if config.is_production:
+            response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+        return response
 
     @app.route('/', methods=['GET', 'POST'])
     def index():
         if request.method == 'POST':
+            _validate_request()
             service_key = request.form.get("service_key", "spotify")
-            playlist_url = request.form.get("playlist_url", "")
+            playlist_url = request.form.get("playlist_url", "").strip()
             if not playlist_url:
                 flash("Please enter a playlist URL.", "danger")
                 return redirect(url_for('index'))
