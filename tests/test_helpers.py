@@ -7,6 +7,8 @@ from helpers import extract_playlist_id, format_duration, sanitize_filename
     ("spotify:playlist:37i9dQZF1DXcBWIGoYBM5M", "37i9dQZF1DXcBWIGoYBM5M"),
     ("https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M?si=some_share_id", "37i9dQZF1DXcBWIGoYBM5M"),
     ("https://open.spotify.com/user/spotify/playlist/37i9dQZF1DXcBWIGoYBM5M", "37i9dQZF1DXcBWIGoYBM5M"),
+    ("http://open.spotify.com/playlist/validid", None),
+    ("https://evil.spotify.com/playlist/validid", None),
     ("https://google.com", None),
     ("", None),
     ("just a string", None),
@@ -23,7 +25,9 @@ def test_extract_playlist_id(url, expected_id):
     ("a" * 200, ("a" * 150) + ".csv"),
     ("", "playlist.csv"),
     ("<>:\"/\\|?*", "playlist.csv"), # all invalid chars
-    ("  ", "playlist.csv"), # only spaces
+    ("  ", "playlist.csv"),
+    ("CON", "playlist.csv"),
+    ("My Playlist.csv", "My_Playlist.csv"), # only spaces
     ("Already.csv", "Already.csv"),
 ])
 def test_sanitize_filename(name, expected_filename):
