@@ -5,6 +5,14 @@ from typing import Iterable, List, Optional
 
 from helpers import format_duration
 
+_FORMULA_PREFIXES = ("=", "+", "-", "@")
+
+
+def safe_csv_text(value):
+    text = str(value or "")
+    return "'" + text if text.startswith(_FORMULA_PREFIXES) else text
+
+
 CSV_FIELDS = [
     "Track #",
     "Name",
@@ -29,12 +37,12 @@ class TrackRow:
     def to_dict(self):
         return {
             "Track #": self.track_number,
-            "Name": self.name,
-            "Artists": self.artists,
-            "Album": self.album,
+            "Name": safe_csv_text(self.name),
+            "Artists": safe_csv_text(self.artists),
+            "Album": safe_csv_text(self.album),
             "Duration (ms)": self.duration_ms if self.duration_ms is not None else "",
             "Duration": self.duration,
-            "Added At": self.added_at,
+            "Added At": safe_csv_text(self.added_at),
         }
 
 
