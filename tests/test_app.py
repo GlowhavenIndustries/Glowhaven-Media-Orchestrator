@@ -30,6 +30,11 @@ def test_index_get(client):
     response = client.get('/')
     assert response.status_code == 200
     assert b"Glowhaven Media Orchestrator" in response.data
+    assert b'tabindex="0"' in response.data
+    assert b'role="region"' in response.data
+    assert b'aria-labelledby="csvPreviewHeading"' in response.data
+    assert b'role="status"' in response.data
+    assert b'aria-label="Export in progress"' in response.data
 
 def csrf_token(client):
     response = client.get('/')
