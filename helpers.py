@@ -31,7 +31,7 @@ def extract_playlist_id(value):
     path_parts = [part for part in parsed.path.split("/") if part]
     if path_parts[:1] == ["playlist"] and len(path_parts) == 2:
         playlist_id = path_parts[1]
-    elif path_parts[:3] == ["user", path_parts[1] if len(path_parts) > 1 else "", "playlist"] and len(path_parts) == 4:
+    elif len(path_parts) == 4 and path_parts[0] == "user" and path_parts[2] == "playlist":
         playlist_id = path_parts[3]
     else:
         return None
