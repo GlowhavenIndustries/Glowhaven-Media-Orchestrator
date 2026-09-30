@@ -27,6 +27,8 @@ def test_extract_playlist_id(url, expected_id):
     ("<>:\"/\\|?*", "playlist.csv"), # all invalid chars
     ("  ", "playlist.csv"),
     ("CON", "playlist.csv"),
+    ("My Playlist.csv", "My_Playlist.csv"),
+    ("CON", "playlist.csv"),
     ("My Playlist.csv", "My_Playlist.csv"), # only spaces
     ("Already.csv", "Already.csv"),
 ])
