@@ -3,272 +3,329 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glowhaven Media Orchestrator | Playlist Export Workflow</title>
+  <title>Glowhaven Command Platform | Media Orchestrator</title>
   <meta
     name="description"
-    content="Glowhaven Media Orchestrator — Export playlist metadata from connected media services into clean, structured CSV files."
+    content="Glowhaven Media Orchestrator — Enterprise local-first metadata export and orchestration platform."
   />
-  <meta
-    name="keywords"
-    content="media orchestrator, playlist export, Spotify CSV, metadata exporter"
-  />
-  <meta name="author" content="Glowhaven Media Orchestrator" />
-  <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0f1115" />
-  <link rel="canonical" href="{{ request.url_root }}" />
-  <meta property="og:title" content="Glowhaven Media Orchestrator" />
-  <meta
-    property="og:description"
-    content="Export playlist metadata into clean, structured CSV files."
-  />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="{{ request.url_root }}" />
-  <meta
-    property="og:image"
-    content="{{ url_for('static', filename='glowhaven-emblem.svg', _external=True) }}"
-  />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Glowhaven Media Orchestrator" />
-  <meta
-    name="twitter:description"
-    content="Export playlist metadata into clean, structured CSV files."
-  />
-  <meta
-    name="twitter:image"
-    content="{{ url_for('static', filename='glowhaven-emblem.svg', _external=True) }}"
-  />
+  <meta name="theme-color" content="#05070a" />
   <link rel="icon" href="{{ url_for('static', filename='glowhaven-emblem.svg') }}" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  <script type="application/ld+json">
-    {
-      \"@context\": \"https://schema.org\",
-      \"@type\": \"SoftwareApplication\",
-      \"name\": \"Glowhaven Media Orchestrator\",
-      \"applicationCategory\": \"BusinessApplication\",
-      \"operatingSystem\": \"Web\",
-      \"description\": \"Export playlist metadata from connected media services into clean, structured CSV files.\",
-      \"url\": \"{{ request.url_root }}\",
-      \"offers\": {
-        \"@type\": \"Offer\",
-        \"price\": \"0\",
-        \"priceCurrency\": \"USD\"
-      }
-    }
-  </script>
 </head>
 <body>
-  <div class="page">
-    <nav class="navbar">
-      <div class="container d-flex align-items-center justify-content-between gap-3">
-        <a class="navbar-brand" href="#">
-          <span class="glowhaven-logo" aria-hidden="true"></span>
-          Glowhaven Media Orchestrator
-        </a>
-        <div class="nav-actions">
-          <span class="tag">Local-First Export</span>
-          <a class="btn btn-outline-light btn-sm" href="#how-it-works">How it works</a>
+  <div class="page-shell">
+    <!-- Top System Header Bar -->
+    <header class="system-navbar">
+      <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+          <a class="brand-title" href="/">
+            <span class="glowhaven-logo-mark" aria-hidden="true"></span>
+            <span>Glowhaven Core</span>
+            <span class="text-secondary fw-normal">/ Orchestrator</span>
+          </a>
+          <span class="badge-status active ms-2">
+            <span class="status-dot pulse"></span>
+            System Online
+          </span>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <div class="d-none d-md-flex align-items-center gap-2">
+            <span class="badge-status">
+              <span class="text-tertiary">Role:</span>
+              <strong class="text-primary">Operator</strong>
+            </span>
+            <span class="badge-status">
+              <span class="text-tertiary">Security:</span>
+              <span class="color-brand">CSRF & Rate-Protected</span>
+            </span>
+          </div>
+          <a href="#audit-security" class="btn-cmd btn-cmd-subtle py-1 px-2" style="font-size: 0.8rem;">
+            Security & Controls
+          </a>
         </div>
       </div>
-    </nav>
+    </header>
 
-    <main class="container">
-      <section class="hero">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-6">
-            <span class="pill">Self-Hosted</span>
-            <h1>Export media playlist metadata into clean, structured files.</h1>
-            <p class="tagline">Turn media platforms into one clean export workflow.</p>
+    <!-- Main Workspace Content -->
+    <main class="container-fluid px-4 py-3">
+      <!-- Command Header Banner -->
+      <section class="command-header">
+        <div class="row align-items-center g-3">
+          <div class="col-lg-7">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="badge-status active">Internal Infrastructure</span>
+              <span class="badge-status">Local-First Architecture</span>
+            </div>
+            <h1>Media Orchestrator Command Center</h1>
             <p>
-              Glowhaven Media Orchestrator fetches playlist metadata on demand and standardizes track information into CSV exports with zero server-side database requirements.
+              Extract, normalize, and export playlist metadata from connected media streaming networks into standardized, injection-neutralized CSV structures.
             </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#export">Start export</a>
-              <a class="btn btn-outline-light" href="#security">Security overview</a>
-            </div>
-            <div class="hero-highlights">
-              <div>
-                <h4>Plugin Architecture</h4>
-                <p>Spotify connector online today with a modular contract for future services.</p>
-              </div>
-              <div>
-                <h4>Normalized Schema</h4>
-                <p>Consistent fields including track numbers, duration timecodes, and timestamps.</p>
-              </div>
-            </div>
-            <div class="stats">
-              <div class="stat-card">
-                <h3>Local-First</h3>
-                <span>Credentials stay on server</span>
-              </div>
-              <div class="stat-card">
-                <h3>{{ csv_fields|length }}</h3>
-                <span>Export fields</span>
-              </div>
-              <div class="stat-card">
-                <h3>CSV</h3>
-                <span>In-memory export output</span>
-              </div>
-            </div>
           </div>
-          <div class="col-lg-6" id="export">
-            <div class="export-card">
-              <h2 class="h4 mb-3">Start a playlist export</h2>
-              <p class="text-muted mb-4">
-                Select a media service module and enter a playlist URL to generate your CSV export.
-              </p>
-              <form id="exportForm" method="POST" action="/">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
-                <div class="mb-3">
-                  <label class="form-label" for="serviceKey">Media service</label>
-                  <select class="form-select" id="serviceKey" name="service_key" required>
-                    {% for service in services %}
-                      <option value="{{ service.key }}" {% if not service.is_available %}disabled{% endif %}>
-                        {{ service.name }} — {{ service.detail }}
-                      </option>
-                    {% endfor %}
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="playlistUrl">Playlist URL</label>
-                  <input
-                    type="url"
-                    class="form-control"
-                    id="playlistUrl"
-                    name="playlist_url"
-                    placeholder="https://open.spotify.com/playlist/..."
-                    required
-                  />
-                </div>
-                <button id="submitButton" type="submit" class="btn btn-primary w-100">Run export</button>
-              </form>
-
-              <div class="mt-4 d-flex align-items-center gap-3">
-                <div id="loader" class="loader d-none" role="status" aria-label="Export in progress" aria-live="polite"></div>
-                <div class="export-meta" id="exportMeta">
-                  <span>Includes: {{ csv_fields|join(", ") }}</span>
-                </div>
-              </div>
-
-              <div id="exportResult" class="mt-4 d-none">
-                <h3 class="h6 mb-2" id="csvPreviewHeading">CSV preview</h3>
-                <div
-                  id="csvPreview"
-                  class="export-preview"
-                  tabindex="0"
-                  role="region"
-                  aria-labelledby="csvPreviewHeading"
-                ></div>
-              </div>
-
-              {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                  <div class="mt-4">
-                    {% for category, message in messages %}
-                      <div class="flash-message" role="alert">
-                        {{ message }}
-                      </div>
-                    {% endfor %}
+          <div class="col-lg-5">
+            <div class="row g-2">
+              <div class="col-6">
+                <div class="stat-tile">
+                  <div class="stat-label">Active Services</div>
+                  <div class="stat-value text-primary">
+                    {{ services | selectattr('is_available') | list | length }} / {{ services | length }}
                   </div>
-                {% endif %}
-              {% endwith %}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="glass-panel mb-5" id="how-it-works">
-        <div class="row g-4">
-          <div class="col-lg-5">
-            <h2 class="h4 mb-3">How it works</h2>
-            <p class="text-muted">
-              Export playlist metadata in three simple steps.
-            </p>
-            <div class="steps">
-              <div class="step-card">
-                <div class="step-badge">1</div>
-                <div>
-                  <h4 class="h6">Select a media source</h4>
-                  <p class="text-muted mb-0">Spotify is available now, with additional connectors supported via the plugin registry.</p>
+                  <div class="stat-desc">Connectors Initialized</div>
                 </div>
               </div>
-              <div class="step-card">
-                <div class="step-badge">2</div>
-                <div>
-                  <h4 class="h6">Metadata extraction</h4>
-                  <p class="text-muted mb-0">Track names, artists, albums, durations, and timestamps are retrieved on demand.</p>
+              <div class="col-6">
+                <div class="stat-tile">
+                  <div class="stat-label">Schema Fields</div>
+                  <div class="stat-value text-primary">{{ csv_fields | length }}</div>
+                  <div class="stat-desc">Normalized Metadata Columns</div>
                 </div>
-              </div>
-              <div class="step-card">
-                <div class="step-badge">3</div>
-                <div>
-                  <h4 class="h6">Download CSV</h4>
-                  <p class="text-muted mb-0">A clean, formula-injection neutralized CSV is generated in memory for direct download.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-7">
-            <h2 class="h4 mb-3">Core capabilities</h2>
-            <div class="feature-list">
-              <div class="feature-card">
-                <h4>Structured Metadata</h4>
-                <p>Track numbers, durations, and timestamps provide complete metadata context.</p>
-              </div>
-              <div class="feature-card">
-                <h4>API Pagination Handling</h4>
-                <p>Automatically traverses paginated API results for large playlists.</p>
-              </div>
-              <div class="feature-card">
-                <h4>Stateless & Local-First</h4>
-                <p>No playlist database required; credentials remain strictly on the server or local environment.</p>
-              </div>
-              <div class="feature-card">
-                <h4>Plugin Architecture</h4>
-                <p>Isolated connector contract separates service details from export generation.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="security-panel mb-5" id="security">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-5">
-            <span class="pill">Security Controls</span>
-            <h2 class="h3">Designed for local and self-hosted security.</h2>
-            <p class="text-muted">
-              Exports are generated on demand. Security controls are built into application endpoints and response pipelines.
-            </p>
+      <!-- Flashed Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="mb-4">
+            {% for category, message in messages %}
+              <div class="alert-cmd {% if category == 'danger' %}danger{% else %}success{% endif %}" role="alert">
+                <div>
+                  <strong>System Notice:</strong> {{ message }}
+                </div>
+              </div>
+            {% endfor %}
           </div>
-          <div class="col-lg-7">
-            <div class="security-grid">
-              <div class="security-card">
-                <h4>Server-Side Credentials</h4>
-                <p>Spotify API keys remain strictly server-side and are never sent to client browsers.</p>
+        {% endif %}
+      {% endwith %}
+
+      <!-- Primary Operational Grid -->
+      <div class="row g-4 mb-4">
+        <!-- Export Execution Panel -->
+        <div class="col-lg-6">
+          <div class="panel h-100">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                  Execute Metadata Export
+                </h2>
+                <div class="panel-subtitle">Select media connector target and supply valid canonical URI</div>
               </div>
-              <div class="security-card">
-                <h4>Formula Injection Protection</h4>
-                <p>Exported CSV text fields automatically neutralize formula prefixes (=, +, -, @).</p>
+              <span class="badge-status">Stateless Pipeline</span>
+            </div>
+
+            <form id="exportForm" method="POST" action="/">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+              <div class="mb-3">
+                <label class="form-label" for="serviceKey">Target Media Service Connector</label>
+                <select class="form-select" id="serviceKey" name="service_key" required>
+                  {% for service in services %}
+                    <option value="{{ service.key }}">
+                      {{ service.name }} — Status: {{ service.detail }}
+                    </option>
+                  {% endfor %}
+                </select>
               </div>
-              <div class="security-card">
-                <h4>CSRF & Rate Limiting</h4>
-                <p>Post endpoints enforce per-session CSRF tokens and in-memory rate limits.</p>
+
+              <div class="mb-3">
+                <label class="form-label" for="playlistUrl">Source Playlist Target URL / URI</label>
+                <input
+                  type="url"
+                  class="form-control"
+                  id="playlistUrl"
+                  name="playlist_url"
+                  placeholder="https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M"
+                  required
+                />
+                <div class="form-text text-tertiary mt-1" style="font-size: 0.78rem;">
+                  Must be an HTTPS canonical URL from supported open endpoints or valid Spotify URI syntax.
+                </div>
               </div>
-              <div class="security-card">
-                <h4>Browser Security Headers</h4>
-                <p>Includes CSP, nosniff, frame options, and HSTS in production.</p>
+
+              <div class="d-flex align-items-center gap-3 mt-4">
+                <button id="submitButton" type="submit" class="btn-cmd btn-cmd-primary flex-grow-1">
+                  <span>Run Metadata Export</span>
+                </button>
+                <button type="reset" class="btn-cmd btn-cmd-secondary">
+                  Reset Form
+                </button>
+              </div>
+            </form>
+
+            <div class="mt-4 pt-3 border-top border-subtle d-flex align-items-center gap-3">
+              <div id="loader" class="cmd-spinner d-none" role="status" aria-label="Export in progress"></div>
+              <div class="export-meta text-secondary" id="exportMeta" style="font-size: 0.8125rem;">
+                <span>Columns: {{ csv_fields | join(", ") }}</span>
               </div>
             </div>
           </div>
         </div>
-      </section>
+
+        <!-- Live Export Preview & Results -->
+        <div class="col-lg-6">
+          <div class="panel h-100 d-flex flex-column">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                  Export Execution Output
+                </h2>
+                <div class="panel-subtitle">Real-time CSV payload inspection and file status</div>
+              </div>
+              <span id="exportStatusBadge" class="badge-status inactive">Awaiting Task</span>
+            </div>
+
+            <!-- Empty / Default State -->
+            <div id="exportPlaceholder" class="d-flex flex-column align-items-center justify-content-center flex-grow-1 py-5 text-center">
+              <svg class="text-tertiary mb-3" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              </svg>
+              <h3 class="h6 text-secondary mb-1">No Active Export Data</h3>
+              <p class="text-tertiary mb-0" style="font-size: 0.8125rem; max-width: 320px;">
+                Enter a valid playlist URL in the execution panel and click "Run Metadata Export" to stream track information into memory.
+              </p>
+            </div>
+
+            <!-- Active Result State -->
+            <div id="exportResult" class="d-none flex-grow-1 flex-column">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <h3 class="h6 text-secondary mb-0" id="csvPreviewHeading">Generated CSV Payload Stream</h3>
+                <span class="badge-status active" style="font-size: 0.72rem;">Formula Injection Safe</span>
+              </div>
+
+              <div
+                id="csvPreview"
+                class="preview-container flex-grow-1 mb-3"
+                tabindex="0"
+                role="region"
+                aria-labelledby="csvPreviewHeading"
+              ></div>
+
+              <div class="d-flex align-items-center justify-content-between border-top border-subtle pt-3">
+                <div id="resultMeta" class="text-tertiary" style="font-size: 0.8125rem;">
+                  <!-- Dynamically populated with rows and file name -->
+                </div>
+                <button id="downloadAgainBtn" class="btn-cmd btn-cmd-secondary py-1 px-3" style="font-size: 0.8125rem;">
+                  Re-trigger Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Status & Security Telemetry Bar -->
+      <div class="row g-4" id="audit-security">
+        <!-- Service Connectors Registry -->
+        <div class="col-lg-6">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                  Service Connector Registry
+                </h2>
+                <div class="panel-subtitle">Registered media service integration plugins and status</div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table-cmd">
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>Identifier</th>
+                    <th>Status</th>
+                    <th>Config Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for service in services %}
+                    <tr>
+                      <td class="fw-medium text-primary">{{ service.name }}</td>
+                      <td class="mono">{{ service.key }}</td>
+                      <td>
+                        {% if service.is_available %}
+                          <span class="badge-status active">
+                            <span class="status-dot"></span> Available
+                          </span>
+                        {% else %}
+                          <span class="badge-status warning">
+                            <span class="status-dot"></span> Unconfigured
+                          </span>
+                        {% endif %}
+                      </td>
+                      <td class="text-tertiary" style="font-size: 0.8rem;">{{ service.detail }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security & Infrastructure Controls -->
+        <div class="col-lg-6">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                  Security & Infrastructure Telemetry
+                </h2>
+                <div class="panel-subtitle">Application-layer security parameters and browser policies</div>
+              </div>
+              <span class="badge-status active">Enforced</span>
+            </div>
+
+            <div class="row g-2">
+              <div class="col-sm-6">
+                <div class="stat-tile">
+                  <div class="stat-label">Session Protection</div>
+                  <div class="stat-value text-primary" style="font-size: 1.1rem;">CSRF Tokenized</div>
+                  <div class="stat-desc">Per-session secrets & constant-time validation</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="stat-tile">
+                  <div class="stat-label">Rate Limiter</div>
+                  <div class="stat-value text-primary" style="font-size: 1.1rem;">20 req / 10m</div>
+                  <div class="stat-desc">In-memory sliding window per remote IP</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="stat-tile">
+                  <div class="stat-label">Formula Neutralization</div>
+                  <div class="stat-value text-primary" style="font-size: 1.1rem;">Active</div>
+                  <div class="stat-desc">CSV formula prefix stripping (=, +, -, @)</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="stat-tile">
+                  <div class="stat-label">Browser Headers</div>
+                  <div class="stat-value text-primary" style="font-size: 1.1rem;">CSP / Nosniff / HSTS</div>
+                  <div class="stat-desc">Deny framing & strict referrer enforcement</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
-    <footer class="footer">
-      <div class="container d-flex flex-column flex-md-row justify-content-between gap-3">
-        <span>Glowhaven Media Orchestrator</span>
-        <span>Review the README for configuration and API setup instructions.</span>
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="container-fluid px-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div>
+          <strong class="text-secondary">Glowhaven Media Orchestrator</strong> — Local-First Media Metadata Pipeline
+        </div>
+        <div>
+          Internal Enterprise Tooling · <a href="https://github.com/GlowhavenIndustries/Glowhaven-Media-Orchestrator" target="_blank" rel="noopener noreferrer" class="text-tertiary text-decoration-none">Documentation & Repo</a>
+        </div>
       </div>
     </footer>
   </div>
